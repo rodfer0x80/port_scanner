@@ -1,12 +1,23 @@
 package main
 
 import (
+	"os"
+
 	"github.com/trevalkov/port_scanner/port"
 )
 
 func main() {
-	filename := "scan_results.txt"
+	hostname := os.Args[1]
 
-	results := port.QuickScan("localhost")
-	port.StdoutToFile(results, filename)
+	filename := "display"
+	if len(os.Args) > 2 {
+		filename = os.Args[2]
+	}
+
+	if filename == "display" {
+		port.StdoutToDisplay(hostname)
+	} else {
+		port.StdoutToFile(hostname, filename)
+	}
+
 }

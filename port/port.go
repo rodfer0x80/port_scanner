@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func ScanPort(protocol, hostname string, intPort int) ScanResult {
+func scanPort(protocol, hostname string, intPort int) ScanResult {
 	port := strconv.Itoa(intPort)
 	result := ScanResult{Port: port}
 
@@ -30,12 +30,12 @@ func ScanPort(protocol, hostname string, intPort int) ScanResult {
 	return result
 }
 
-func QuickScan(hostname string) []ScanResult {
+func quickScan(hostname string) []ScanResult {
 	var results []ScanResult
 
 	for i := 1; i <= 1023; i++ {
-		results = append(results, ScanPort("tcp", hostname, i))
-		results = append(results, ScanPort("udp", hostname, i))
+		results = append(results, scanPort("tcp", hostname, i))
+		results = append(results, scanPort("udp", hostname, i))
 	}
 
 	return results

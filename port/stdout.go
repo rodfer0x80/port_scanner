@@ -23,15 +23,15 @@ func buildOutputString(open []ScanResult) string {
 	var cached []int
 	for i, result := range open {
 		if result.Protocol == "UDP" {
-			str += result.Port + "\n"
+			str += result.Port + ", "
 		} else {
 			cached = append(cached, i)
 		}
 	}
 
-	str += "==== TCP ====\n"
+	str += "\n==== TCP ====\n"
 	for _, i := range cached {
-		str += open[i].Port + "\n"
+		str += open[i].Port + " "
 	}
 
 	return str
@@ -45,7 +45,8 @@ func getScanOutput(results []ScanResult) string {
 	return outputString
 }
 
-func StdoutToFile(results []ScanResult, filename string) {
+func StdoutToFile(hostname string, filename string) {
+	results := quickScan(hostname)
 	output := getScanOutput(results)
 
 	if err := os.WriteFile(filename, []byte(output), 0666); err != nil {
@@ -55,7 +56,8 @@ func StdoutToFile(results []ScanResult, filename string) {
 	fmt.Println("Saved output to file")
 }
 
-func StdoutToDisplay(results []ScanResult) {
+func StdoutToDisplay(hostname string) {
+    results := quickScan(hostname)
 	output := getScanOutput(results)
 
 	fmt.Println(output)
